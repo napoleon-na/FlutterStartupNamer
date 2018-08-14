@@ -15,9 +15,9 @@ class MyApp extends StatelessWidget {
 }
 
 class RandomWordsState extends State<RandomWords> {
-  final _suggestions = <WordPair>[];
-
-  final _beggerFont = const TextStyle(fontSize: 18.0);
+  final List<WordPair> _suggestions = <WordPair>[];
+  final Set<WordPair> _saved = new Set<WordPair>();
+  final TextStyle _beggerFont = const TextStyle(fontSize: 18.0);
 
   @override
   Widget build(BuildContext context) {
@@ -45,11 +45,16 @@ class RandomWordsState extends State<RandomWords> {
   }
 
   Widget _buildRow(WordPair pair) {
+    final bool alreadySaved = _saved.contains(pair);
     return ListTile(
       title: Text(
         pair.asPascalCase,
         style: _beggerFont,
-      )
+      ),
+      trailing: new Icon(
+        alreadySaved ? Icons.favorite : Icons.favorite_border,
+        color: alreadySaved ? Colors.red : null,
+      ),
     );
   }
 }
